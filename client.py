@@ -179,6 +179,16 @@ class Client:
 
         bookingData = booking.getBookingData().toJsonBody()
 
+        print("Bringing check in data... ", end='')
+        while True:
+            check_in_data = get_check_in_data(booking_data["ticket"]["lsl"][0],
+                                              booking_data["wifi"]["ports"][0]).to_json_body()
+            if "host" in check_in_data:
+                print("Finished")
+                break
+            else:
+                await asyncio.sleep(random.randint(100, 150) / 100)
+
         checkInData = checkIn.getCheckInData(
             bookingData["ticket"]["lsl"][0],
             bookingData["wifi"]["ports"][0]).toJsonBody()
